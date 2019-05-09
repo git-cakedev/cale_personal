@@ -1,7 +1,10 @@
+:: This script parses through well file folders to get similarily named files and merges the pdfs into sections as outlined by Canbriam standards.
+
 @echo off
 
 echo deleting extra files (WARNING: MAKE SURE ALL FILES WERE CONVERTED TO PDF!!!)
 
+:: deletes residual files that were converted using foxit PhantomPDF
 del *.tif
 del *.xlsx
 del *.xls
@@ -10,6 +13,7 @@ del *.png
 echo delete completed
 echo merging pdf files
 
+:: retrieves working directory (current well file being merged, where the script is located) and saves well name in a variable for renaming purposes  
 SET CDIR=%~dp0
 SET _CDIR=%CDIR:~1,-1%
 for %%i in ("%_CDIR%") do SET Name=%%~nxi
@@ -17,6 +21,7 @@ SET Name=%Name:~0,5%
 ECHO Continue if Wellname is %Name%
 Pause
 
+:: logic for determining the section a file belongs to, and merging all the similar pdfs based on the Canbriam naming conventions
 IF EXIST "ACQ *.pdf" (
     pdftk.exe ACQ*.pdf cat output "%NAME% SEC 1 ACQ.pdf"
 	echo ACQ files merged!
