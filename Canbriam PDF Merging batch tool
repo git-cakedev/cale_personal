@@ -1,0 +1,92 @@
+@echo off
+
+echo deleting extra files (WARNING: MAKE SURE ALL FILES WERE CONVERTED TO PDF!!!)
+
+del *.tif
+del *.xlsx
+del *.xls
+del *.doc
+del *.png
+echo delete completed
+echo merging pdf files
+
+SET CDIR=%~dp0
+SET _CDIR=%CDIR:~1,-1%
+for %%i in ("%_CDIR%") do SET Name=%%~nxi
+SET Name=%Name:~0,5%
+ECHO Continue if Wellname is %Name%
+Pause
+
+IF EXIST "ACQ *.pdf" (
+    pdftk.exe ACQ*.pdf cat output "%NAME% SEC 1 ACQ.pdf"
+	echo ACQ files merged!
+) ELSE (
+    ECHO ACQ not found
+)
+
+IF EXIST "AMD *.pdf" (
+    pdftk.exe AMD*.pdf cat output "%NAME% SEC 2 AMD.pdf"
+	echo AMD files merged!
+) ELSE (
+    ECHO AMD not found
+)
+
+IF EXIST "COR *.pdf" (
+    pdftk.exe COR*.pdf cat output "%NAME% SEC 3 COR.pdf"
+	echo COR files merged!
+) ELSE (
+    ECHO COR not found
+)
+
+IF EXIST "LET *.pdf" (
+    pdftk.exe LET*.pdf cat output "%NAME% SEC 4 LET.pdf"
+	echo LET files merged!
+) ELSE (
+    ECHO LET not found
+)
+
+IF EXIST "LTO *.pdf" (
+    pdftk.exe LTO*.pdf cat output "%NAME% SEC 5 LTO.pdf"
+	echo LTO files merged!
+) ELSE (
+    ECHO LTO not found
+)
+
+IF EXIST "REG *.pdf" (
+    pdftk.exe REG*.pdf cat output "%NAME% SEC 6 REG.pdf"
+	echo REG files merged!
+) ELSE (
+    ECHO REG not found
+)
+
+IF EXIST "SUR *.pdf" (
+    pdftk.exe SUR*.pdf cat output "%NAME% SEC 7 SUR.pdf"
+	echo SUR files merged!
+) ELSE (
+    ECHO SUR not found
+)
+
+IF EXIST "TAK *.pdf" (
+    pdftk.exe TAK*.pdf cat output "%NAME% SEC 8 TAK.pdf"
+	echo TAK files merged!
+) ELSE (
+    ECHO TAK not found
+)
+
+IF EXIST "ENV *.pdf" (
+    pdftk.exe ENV*.pdf cat output "%NAME% SEC 9 ENV.pdf"
+	echo ENV files merged!
+) ELSE (
+    ECHO ENV not found
+)
+IF EXIST "SUP *.pdf" (
+    pdftk.exe SUP*.pdf cat output "%NAME% SEC 10 SUP.pdf"
+	echo SUP files merged!
+) ELSE (
+    ECHO SUP not found
+)
+
+ECHO Merging Complete!
+Pause
+END
+
